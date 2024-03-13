@@ -1,23 +1,16 @@
 package models
 
-// import (
-// 	"errors"
-// 	// "fmt"
-// 	// "time"
-// 	"gorm.io/gorm"
-// )
+import (
+	"time"
+)
 
 type Item struct {
-	ItemID      int    `gorm:"primaryKey" json:"item_id"`
-	ItemCode    string `gorm:"unique type:varchar(100)" json:"itemCode"`
-	Description string `gorm:"type:varchar(100)" json:"description"`
-	Quantity    int    `gorm:"type:integer" json:"quantity"`
-	OrderID     int    `json:"order_id"`
+	ID          uint       `gorm:"primaryKey" json:"item_id"`
+	ItemCode    string     `json:"item_code"`
+	Description string     `json:"description"`
+	OrderId     uint       `json:"order_id"`
+	Quantity    int        `json:"quantity"`
+	CreatedAt   time.Time  `json:"created_at"`
+	UpdatedAt   time.Time  `json:"updated_at"`
+	DeletedAt   *time.Time `sql:"index" json:"-"`
 }
-
-// func (p *Item) BeforeCreate(tx *gorm.DB) (err error) {
-// 	if p.Quantity < 0 {
-// 		return errors.New("KUANTITAS TIDAK BOLEH KURANG DARI 0")
-// 	}
-// 	return
-// }

@@ -1,6 +1,7 @@
 package database
 
 import (
+	"assignment2/common"
 	"assignment2/models"
 	"fmt"
 	"log"
@@ -10,17 +11,17 @@ import (
 )
 
 var (
-	host     = "localhost"
-	port     = 5432
-	user     = "postgres"
-	password = "curut"
-	dbname   = "orders_by"
-	db       *gorm.DB
-	err      error
+	db  *gorm.DB
+	err error
 )
 
 func StartDB() {
-	config := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable TimeZone=Asia/Jakarta", host, port, user, password, dbname)
+	config := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable TimeZone=Asia/Jakarta",
+		common.GetDBHost(),
+		common.GetDBPort(),
+		common.GetDBUsername(),
+		common.GetDBPassword(),
+		common.GetDBName())
 
 	db, err = gorm.Open(postgres.Open(config), &gorm.Config{})
 
@@ -30,6 +31,8 @@ func StartDB() {
 
 	//untuk membuat tabel migrasi
 	db.Debug().AutoMigrate(&models.Order{}, &models.Item{})
+
+	fmt.Println("Connected to database")
 
 }
 
